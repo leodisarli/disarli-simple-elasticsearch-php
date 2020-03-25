@@ -1,5 +1,5 @@
 {
-    "name": "leosarli/disarli-simple-elasticsearch-php",
+    "name": "leodisarli/disarli-simple-elasticsearch-php",
     "description": "PHP simple library to use elasticsearch",
     "version": "1.0.0",
     "type": "library",
