@@ -245,6 +245,28 @@ class SimpleElasticsearch extends BaseElasticsearch
     }
 
     /**
+     * method deleteDocument
+     * delete a document from elasticsearch
+     * @param $indexName
+     * @return mixed
+     */
+    public function deleteDocument(
+        string $indexName,
+        string $id
+    ) {
+        $uri = '/' . $indexName . '/_doc/' . $id;
+
+        $result = $this->sendRequest(
+            'DELETE',
+            $this->elasticHost,
+            $uri
+        );
+        return $this->decodeResponse(
+            $result
+        );
+    }
+
+    /**
      * method putIndex
      * create an index in elasticsearch
      * @param string $indexName
@@ -266,7 +288,8 @@ class SimpleElasticsearch extends BaseElasticsearch
     /**
      * method putMapping
      * put a mapping to elasticsearch
-     * @param $indexName
+     * @param string $indexName
+     * @param array $mapping
      * @return mixed
      */
     public function putMapping(
@@ -278,6 +301,28 @@ class SimpleElasticsearch extends BaseElasticsearch
             $this->elasticHost,
             '/' . $indexName . '/_mapping',
             $mapping,
+        );
+        return $this->decodeResponse(
+            $result
+        );
+    }
+
+    /**
+     * method putTemplate
+     * put a template to elasticsearch
+     * @param string $name
+     * @param array $template
+     * @return mixed
+     */
+    public function putTemplate(
+        string $name,
+        array $template
+    ) {
+        $result = $this->sendRequest(
+            'PUT',
+            $this->elasticHost,
+            '/_template/' . $name,
+            $template,
         );
         return $this->decodeResponse(
             $result
@@ -316,6 +361,44 @@ class SimpleElasticsearch extends BaseElasticsearch
             'GET',
             $this->elasticHost,
             '/' . $indexName . '/_mapping'
+        );
+        return $this->decodeResponse(
+            $result
+        );
+    }
+
+    /**
+     * method getTemplate
+     * get a template
+     * @param $name
+     * @return mixed
+     */
+    public function getTemplate(
+        string $name
+    ) {
+        $result = $this->sendRequest(
+            'GET',
+            $this->elasticHost,
+            '/_template/' . $name
+        );
+        return $this->decodeResponse(
+            $result
+        );
+    }
+
+    /**
+     * method deleteTemplate
+     * get a template
+     * @param $name
+     * @return mixed
+     */
+    public function deleteTemplate(
+        string $name
+    ) {
+        $result = $this->sendRequest(
+            'DELETE',
+            $this->elasticHost,
+            '/_template/' . $name
         );
         return $this->decodeResponse(
             $result

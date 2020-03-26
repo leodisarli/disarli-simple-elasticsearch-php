@@ -7,6 +7,7 @@ use SimpleElasticsearch\SimpleElasticsearch;
 $host = 'http://localhost:9200/';
 $elastic = new SimpleElasticsearch($host);
 
+$documentName = 'document';
 $indexName = 'test';
 $id = 'a2QWCXEB6_0brNPPeh-E';
 $mapping = [
@@ -22,10 +23,33 @@ $mapping = [
         ]
     ]
 ];
+$template = [
+    'index_patterns' => [
+        'document*'
+    ],
+    'mappings' => [
+        '_source' => [
+            'enabled' => true,
+        ],
+        'properties' => [
+            'name' => [
+                'type' => 'keyword',
+            ],
+            'created' => [
+                'type'=> 'date',
+                'format' => 'yyyy-MM-dd HH:mm:ss',
+            ],
+        ]
+    ]
+];
 $data = [
     'name' => 'user',
     'email' => 'test@test.com',
     'gender' => 0,
+];
+$dataTemplate = [
+    'name' => 'document1',
+    'created' => date('Y-m-d H:i:d'),
 ];
 $query = "SELECT * FROM test WHERE email LIKE '%test@test.com' ORDER BY email DESC";
 $dslQuery =  [
@@ -66,11 +90,21 @@ echo PHP_EOL;
 
 print_r('Put mapping');
 echo PHP_EOL;
-$mapping = $elastic->putMapping(
+$newMapping = $elastic->putMapping(
     $indexName,
     $mapping
 );
-print_r($mapping);
+print_r($newMapping);
+print_r('===================================================');
+echo PHP_EOL;
+
+print_r('Put template');
+echo PHP_EOL;
+$newTemplate = $elastic->putTemplate(
+    $documentName,
+    $template
+);
+print_r($newTemplate);
 print_r('===================================================');
 echo PHP_EOL;
 
@@ -89,6 +123,25 @@ $getMapping = $elastic->getMapping(
     $indexName
 );
 print_r($getMapping);
+print_r('===================================================');
+echo PHP_EOL;
+
+print_r('Get template');
+echo PHP_EOL;
+$getTemplate = $elastic->getTemplate(
+    $documentName
+);
+print_r($getTemplate);
+print_r('===================================================');
+echo PHP_EOL;
+
+print_r('Post documents with template');
+echo PHP_EOL;
+$postDocumentTemplate = $elastic->postDocument(
+    $documentName,
+    $dataTemplate
+);
+print_r($postDocumentTemplate);
 print_r('===================================================');
 echo PHP_EOL;
 
@@ -125,11 +178,23 @@ for ($i = 0; $i < 60; $i++) {
         $i
     );
 }
-print_r('60 documents');
+print_r('60 documents added') . PHP_EOL;
 print_r('===================================================');
 echo PHP_EOL;
 
 sleep(1);
+
+print_r('Delete document'); 
+echo PHP_EOL;
+$deleteDocument = $elastic->deleteDocument(
+    $indexName,
+    1
+);
+print_r($deleteDocument);
+print_r('===================================================');
+echo PHP_EOL;
+
+
 print_r('Search documents');
 echo PHP_EOL;
 $searchDocuments = $elastic->searchDocuments(
@@ -204,11 +269,29 @@ print_r($translate);
 print_r('===================================================');
 echo PHP_EOL;
 
+print_r('Delete template'); 
+echo PHP_EOL;
+$deleteTemplate = $elastic->deleteTemplate(
+    $documentName
+);
+print_r($deleteTemplate);
+print_r('===================================================');
+echo PHP_EOL;
+
 print_r('Delete index');
 echo PHP_EOL;
 $deleteIndex = $elastic->deleteIndex(
     $indexName
 );
 print_r($deleteIndex);
+print_r('===================================================');
+echo PHP_EOL;
+
+print_r('Delete index');
+echo PHP_EOL;
+$deleteIndexDocument = $elastic->deleteIndex(
+    $documentName
+);
+print_r($deleteIndexDocument);
 print_r('===================================================');
 echo PHP_EOL;

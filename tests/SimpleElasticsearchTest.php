@@ -34,12 +34,12 @@ class SimpleElasticsearchTest extends TestCase
             ->once()
             ->withAnyArgs()
             ->andReturnSelf();
-        
+
         $guzzleMock->shouldReceive('getContents')
             ->once()
             ->withAnyArgs()
             ->andReturn($response);
-            
+
         $host = 'http://localhost:9200/';
         $simpleElasticsearch = Mockery::mock(SimpleElasticsearch::class, [$host])
             ->makePartial();
@@ -70,12 +70,12 @@ class SimpleElasticsearchTest extends TestCase
             ->once()
             ->withAnyArgs()
             ->andReturnSelf();
-        
+
         $guzzleMock->shouldReceive('getContents')
             ->once()
             ->withAnyArgs()
             ->andReturn($response);
-            
+
         $host = 'http://localhost:9200/';
         $simpleElasticsearch = Mockery::mock(SimpleElasticsearch::class, [$host])
             ->makePartial();
@@ -106,12 +106,12 @@ class SimpleElasticsearchTest extends TestCase
             ->once()
             ->withAnyArgs()
             ->andReturnSelf();
-        
+
         $guzzleMock->shouldReceive('getContents')
             ->once()
             ->withAnyArgs()
             ->andReturn($response);
-            
+
         $host = 'http://localhost:9200/';
         $simpleElasticsearch = Mockery::mock(SimpleElasticsearch::class, [$host])
             ->makePartial();
@@ -143,12 +143,12 @@ class SimpleElasticsearchTest extends TestCase
             ->once()
             ->withAnyArgs()
             ->andReturnSelf();
-        
+
         $guzzleMock->shouldReceive('getContents')
             ->once()
             ->withAnyArgs()
             ->andReturn($response);
-            
+
         $host = 'http://localhost:9200/';
         $simpleElasticsearch = Mockery::mock(SimpleElasticsearch::class, [$host])
             ->makePartial();
@@ -179,12 +179,12 @@ class SimpleElasticsearchTest extends TestCase
             ->once()
             ->withAnyArgs()
             ->andReturnSelf();
-        
+
         $guzzleMock->shouldReceive('getContents')
             ->once()
             ->withAnyArgs()
             ->andReturn($response);
-            
+
         $host = 'http://localhost:9200/';
         $simpleElasticsearch = Mockery::mock(SimpleElasticsearch::class, [$host])
             ->makePartial();
@@ -215,12 +215,12 @@ class SimpleElasticsearchTest extends TestCase
             ->once()
             ->withAnyArgs()
             ->andReturnSelf();
-        
+
         $guzzleMock->shouldReceive('getContents')
             ->once()
             ->withAnyArgs()
             ->andReturn($response);
-            
+
         $host = 'http://localhost:9200/';
         $simpleElasticsearch = Mockery::mock(SimpleElasticsearch::class, [$host])
             ->makePartial();
@@ -252,12 +252,12 @@ class SimpleElasticsearchTest extends TestCase
             ->once()
             ->withAnyArgs()
             ->andReturnSelf();
-        
+
         $guzzleMock->shouldReceive('getContents')
             ->once()
             ->withAnyArgs()
             ->andReturn($response);
-            
+
         $host = 'http://localhost:9200/';
         $simpleElasticsearch = Mockery::mock(SimpleElasticsearch::class, [$host])
             ->makePartial();
@@ -290,12 +290,12 @@ class SimpleElasticsearchTest extends TestCase
             ->once()
             ->withAnyArgs()
             ->andReturnSelf();
-        
+
         $guzzleMock->shouldReceive('getContents')
             ->once()
             ->withAnyArgs()
             ->andReturn($response);
-            
+
         $host = 'http://localhost:9200/';
         $simpleElasticsearch = Mockery::mock(SimpleElasticsearch::class, [$host])
             ->makePartial();
@@ -328,12 +328,12 @@ class SimpleElasticsearchTest extends TestCase
             ->once()
             ->withAnyArgs()
             ->andReturnSelf();
-        
+
         $guzzleMock->shouldReceive('getContents')
             ->once()
             ->withAnyArgs()
             ->andReturn($response);
-            
+
         $host = 'http://localhost:9200/';
         $simpleElasticsearch = Mockery::mock(SimpleElasticsearch::class, [$host])
             ->makePartial();
@@ -366,12 +366,12 @@ class SimpleElasticsearchTest extends TestCase
             ->once()
             ->withAnyArgs()
             ->andReturnSelf();
-        
+
         $guzzleMock->shouldReceive('getContents')
             ->once()
             ->withAnyArgs()
             ->andReturn($response);
-            
+
         $host = 'http://localhost:9200/';
         $simpleElasticsearch = Mockery::mock(SimpleElasticsearch::class, [$host])
             ->makePartial();
@@ -381,6 +381,43 @@ class SimpleElasticsearchTest extends TestCase
             ->andReturn($guzzleMock);
 
         $result = $simpleElasticsearch->getDocument(
+            'index',
+            '1'
+        );
+        $this->assertInternalType('array', $result);
+    }
+
+    /**
+     * @covers SimpleElasticsearch\SimpleElasticsearch::deleteDocument
+     */
+    public function testDeleteDocument()
+    {
+        $response = [];
+        $guzzleMock = Mockery::mock(Guzzle::class);
+        $guzzleMock->shouldReceive('DELETE')
+            ->once()
+            ->withAnyArgs()
+            ->andReturnSelf();
+
+        $guzzleMock->shouldReceive('getBody')
+            ->once()
+            ->withAnyArgs()
+            ->andReturnSelf();
+
+        $guzzleMock->shouldReceive('getContents')
+            ->once()
+            ->withAnyArgs()
+            ->andReturn($response);
+
+        $host = 'http://localhost:9200/';
+        $simpleElasticsearch = Mockery::mock(SimpleElasticsearch::class, [$host])
+            ->makePartial();
+
+        $simpleElasticsearch->shouldReceive('newGuzzle')
+            ->once()
+            ->andReturn($guzzleMock);
+
+        $result = $simpleElasticsearch->deleteDocument(
             'index',
             '1'
         );
@@ -403,12 +440,12 @@ class SimpleElasticsearchTest extends TestCase
             ->once()
             ->withAnyArgs()
             ->andReturnSelf();
-        
+
         $guzzleMock->shouldReceive('getContents')
             ->once()
             ->withAnyArgs()
             ->andReturn($response);
-            
+
         $host = 'http://localhost:9200/';
         $simpleElasticsearch = Mockery::mock(SimpleElasticsearch::class, [$host])
             ->makePartial();
@@ -439,12 +476,12 @@ class SimpleElasticsearchTest extends TestCase
             ->once()
             ->withAnyArgs()
             ->andReturnSelf();
-        
+
         $guzzleMock->shouldReceive('getContents')
             ->once()
             ->withAnyArgs()
             ->andReturn($response);
-            
+
         $host = 'http://localhost:9200/';
         $simpleElasticsearch = Mockery::mock(SimpleElasticsearch::class, [$host])
             ->makePartial();
@@ -454,6 +491,43 @@ class SimpleElasticsearchTest extends TestCase
             ->andReturn($guzzleMock);
 
         $result = $simpleElasticsearch->putMapping(
+            'index',
+            []
+        );
+        $this->assertInternalType('array', $result);
+    }
+
+    /**
+     * @covers SimpleElasticsearch\SimpleElasticsearch::putTemplate
+     */
+    public function testPutTemplate()
+    {
+        $response = [];
+        $guzzleMock = Mockery::mock(Guzzle::class);
+        $guzzleMock->shouldReceive('PUT')
+            ->once()
+            ->withAnyArgs()
+            ->andReturnSelf();
+
+        $guzzleMock->shouldReceive('getBody')
+            ->once()
+            ->withAnyArgs()
+            ->andReturnSelf();
+
+        $guzzleMock->shouldReceive('getContents')
+            ->once()
+            ->withAnyArgs()
+            ->andReturn($response);
+
+        $host = 'http://localhost:9200/';
+        $simpleElasticsearch = Mockery::mock(SimpleElasticsearch::class, [$host])
+            ->makePartial();
+
+        $simpleElasticsearch->shouldReceive('newGuzzle')
+            ->once()
+            ->andReturn($guzzleMock);
+
+        $result = $simpleElasticsearch->putTemplate(
             'index',
             []
         );
@@ -476,12 +550,12 @@ class SimpleElasticsearchTest extends TestCase
             ->once()
             ->withAnyArgs()
             ->andReturnSelf();
-        
+
         $guzzleMock->shouldReceive('getContents')
             ->once()
             ->withAnyArgs()
             ->andReturn($response);
-            
+
         $host = 'http://localhost:9200/';
         $simpleElasticsearch = Mockery::mock(SimpleElasticsearch::class, [$host])
             ->makePartial();
@@ -512,12 +586,12 @@ class SimpleElasticsearchTest extends TestCase
             ->once()
             ->withAnyArgs()
             ->andReturnSelf();
-        
+
         $guzzleMock->shouldReceive('getContents')
             ->once()
             ->withAnyArgs()
             ->andReturn($response);
-            
+
         $host = 'http://localhost:9200/';
         $simpleElasticsearch = Mockery::mock(SimpleElasticsearch::class, [$host])
             ->makePartial();
@@ -527,6 +601,78 @@ class SimpleElasticsearchTest extends TestCase
             ->andReturn($guzzleMock);
 
         $result = $simpleElasticsearch->getMapping(
+            'index'
+        );
+        $this->assertInternalType('array', $result);
+    }
+
+    /**
+     * @covers SimpleElasticsearch\SimpleElasticsearch::getTemplate
+     */
+    public function testGetTemplate()
+    {
+        $response = [];
+        $guzzleMock = Mockery::mock(Guzzle::class);
+        $guzzleMock->shouldReceive('GET')
+            ->once()
+            ->withAnyArgs()
+            ->andReturnSelf();
+
+        $guzzleMock->shouldReceive('getBody')
+            ->once()
+            ->withAnyArgs()
+            ->andReturnSelf();
+
+        $guzzleMock->shouldReceive('getContents')
+            ->once()
+            ->withAnyArgs()
+            ->andReturn($response);
+
+        $host = 'http://localhost:9200/';
+        $simpleElasticsearch = Mockery::mock(SimpleElasticsearch::class, [$host])
+            ->makePartial();
+
+        $simpleElasticsearch->shouldReceive('newGuzzle')
+            ->once()
+            ->andReturn($guzzleMock);
+
+        $result = $simpleElasticsearch->getTemplate(
+            'index'
+        );
+        $this->assertInternalType('array', $result);
+    }
+
+    /**
+     * @covers SimpleElasticsearch\SimpleElasticsearch::deleteTemplate
+     */
+    public function testDeleteTemplate()
+    {
+        $response = [];
+        $guzzleMock = Mockery::mock(Guzzle::class);
+        $guzzleMock->shouldReceive('DELETE')
+            ->once()
+            ->withAnyArgs()
+            ->andReturnSelf();
+
+        $guzzleMock->shouldReceive('getBody')
+            ->once()
+            ->withAnyArgs()
+            ->andReturnSelf();
+
+        $guzzleMock->shouldReceive('getContents')
+            ->once()
+            ->withAnyArgs()
+            ->andReturn($response);
+
+        $host = 'http://localhost:9200/';
+        $simpleElasticsearch = Mockery::mock(SimpleElasticsearch::class, [$host])
+            ->makePartial();
+
+        $simpleElasticsearch->shouldReceive('newGuzzle')
+            ->once()
+            ->andReturn($guzzleMock);
+
+        $result = $simpleElasticsearch->deleteTemplate(
             'index'
         );
         $this->assertInternalType('array', $result);
