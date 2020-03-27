@@ -49,7 +49,7 @@ $data = [
 ];
 $dataTemplate = [
     'name' => 'document1',
-    'created' => date('Y-m-d H:i:d'),
+    'created' => date('Y-m-d H:i:s'),
 ];
 $query = "SELECT * FROM test WHERE email LIKE '%test@test.com' ORDER BY email DESC";
 $dslQuery =  [
