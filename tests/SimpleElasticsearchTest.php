@@ -19,6 +19,76 @@ class SimpleElasticsearchTest extends TestCase
     }
 
     /**
+     * @covers SimpleElasticsearch\SimpleElasticsearch::isConnected
+     */
+    public function testIsConnected()
+    {
+        $response = [];
+        $guzzleMock = Mockery::mock(Guzzle::class);
+        $guzzleMock->shouldReceive('GET')
+            ->once()
+            ->withAnyArgs()
+            ->andReturnSelf();
+
+        $guzzleMock->shouldReceive('getBody')
+            ->once()
+            ->withAnyArgs()
+            ->andReturnSelf();
+
+        $guzzleMock->shouldReceive('getContents')
+            ->once()
+            ->withAnyArgs()
+            ->andReturn($response);
+
+        $host = 'http://localhost:9200/';
+        $simpleElasticsearch = Mockery::mock(SimpleElasticsearch::class, [$host])
+            ->makePartial();
+
+        $simpleElasticsearch->shouldReceive('newGuzzle')
+            ->once()
+            ->andReturn($guzzleMock);
+
+        $result = $simpleElasticsearch->isConnected();
+        $this->assertTrue($result);
+    }
+
+    /**
+     * @covers SimpleElasticsearch\SimpleElasticsearch::isConnected
+     */
+    public function testIsNotConnected()
+    {
+        $response = [
+            'error_code' => 0
+        ];
+        $guzzleMock = Mockery::mock(Guzzle::class);
+        $guzzleMock->shouldReceive('GET')
+            ->once()
+            ->withAnyArgs()
+            ->andReturnSelf();
+
+        $guzzleMock->shouldReceive('getBody')
+            ->once()
+            ->withAnyArgs()
+            ->andReturnSelf();
+
+        $guzzleMock->shouldReceive('getContents')
+            ->once()
+            ->withAnyArgs()
+            ->andReturn($response);
+
+        $host = 'http://localhost:9200/';
+        $simpleElasticsearch = Mockery::mock(SimpleElasticsearch::class, [$host])
+            ->makePartial();
+
+        $simpleElasticsearch->shouldReceive('newGuzzle')
+            ->once()
+            ->andReturn($guzzleMock);
+
+        $result = $simpleElasticsearch->isConnected();
+        $this->assertFalse($result);
+    }
+
+    /**
      * @covers SimpleElasticsearch\SimpleElasticsearch::sql
      */
     public function testSql()

@@ -9,6 +9,25 @@ class SimpleElasticsearch extends BaseElasticsearch
     public $elasticHost;
 
     /**
+     * is connected
+     * @return bool
+     */
+    public function isConnected(): bool
+    {
+        $result = $this->sendRequest(
+            'GET',
+            $this->elasticHost,
+            '/'
+        );
+        if (is_array($result) &&
+            isset($result['error_code'])
+        ) {
+            return false;
+        }
+        return true;
+    }
+    
+    /**
      * method sql
      * execute sql on elasticsearch
      * @param string $query
